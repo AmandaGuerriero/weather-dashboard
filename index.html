@@ -11,16 +11,29 @@
 </head>
 <body>
     <main>
-        <!-- Stored City Searches -->
-        
-        <!-- Search By City -->
-        <form>
-            <input type="text" id="city" name="city" placeholder="City, State"><br>
-        </form>
-
-        <!-- Results Container 1 -->
-
-        <!-- Results Container 2 -->
+        <!-- Main Content -->
+        <div class="container">
+            <div class = "row">
+                <div class="col-sm-4">
+                    <!-- Search By City -->
+                    <form>
+                        <label for="city">Search for a City:</label><br>
+                        <input type="text" id="city" name="city" placeholder="City, State"><br>
+                        <button type="button" class="btn btn-outline-primary">?</button>
+                    </form>
+                    <!-- Stored City Searches -->
+                    <h1>Saved Searchs</h1>
+                </div>
+                    <!-- Results Container 1 -->
+                <div class="col-sm-8">
+                        <h1>Weather placeholder</h1>
+                        <div id="response-container">
+                            
+                        </div>
+                </div>
+                <!-- Results Container 2 -->
+            </div>
+        </div>
     </main>
 <script src="./assets/js/script.js"></script>
 </body>
