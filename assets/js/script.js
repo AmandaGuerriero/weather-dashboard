@@ -20,11 +20,12 @@ function getCity(cityName) {
         $("#today").empty();
         
         // Create Card Container
-        var currentCard = $("<div>").addClass("card-body-current ml-2");
+        var currentCard = $("<div>").addClass("card-body-current m-2");
         
         // Create Card Contents
         // City Name, Date, Icon, Weather Conditions, Temperature, Humidity, Wind Speed
-        var name = $("<h1 span>").text(weatherResponse.name).addClass("d-inline-flex");
+        var name = $("<h2 span>").text(weatherResponse.name).addClass("d-inline-flex");
+        var currentDate = moment(weatherResponse.main.dt).format("(MM/DD/YYYY)");
         var icon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + weatherResponse.weather[0].icon + ".png");
         var temp = $("<p>").text("Temperature: "+ weatherResponse.main.temp + " °F");
         var humidity = $("<p>").text("Humidity: "+ weatherResponse.main.humidity + " %");
@@ -32,6 +33,7 @@ function getCity(cityName) {
 
         // Append Card Contents to Card
         currentCard.append(name);
+        name.append(currentDate);
         currentCard.append(icon);
         currentCard.append(temp);
         currentCard.append(humidity);
@@ -100,13 +102,16 @@ function getForecast(cityName) {
                 var card = $("<div>").addClass("card text-white bg-primary");
                 var body = $("<div>").addClass("card-body p-2");
                 
+                // Date Information
+                var dateDisplay = $("<h4>").addClass("card-text").text(moment(forecastResponse.list[i].dt_txt).format("MM/DD/YYYY"));
+
                 // Forecast Information
                 var icon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + forecastResponse.list[i].weather[0].icon + ".png");
                 var tempFore = $("<p>").addClass("card-text").text("Temp: " + forecastResponse.list[i].main.temp_max + " °F");
                 var humidity = $("<p>").addClass("card-text").text("Humidity: " + forecastResponse.list[i].main.humidity + " %");
 
                 // Append Forecast to Row
-                container.append(card.append(body.append(icon, tempFore, humidity)));
+                container.append(card.append(body.append(dateDisplay, icon, tempFore, humidity)));
                 $("#forecast .row").append(container);
             }
         }
@@ -139,7 +144,6 @@ function saveCity(event) {
 }
 
 function printCitySearches() {
-    
     if(localStorage.length === 0) {
         console.log(" there is nothing in there")
     } else {
@@ -159,6 +163,7 @@ function printCitySearches() {
             // Display on page
             listItem.appendChild(storedCity);
         }
+        // Re-search city on click
         $(".city-list").on("click", "li", function() {
             getCity($(this).text());
         })
