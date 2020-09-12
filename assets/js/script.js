@@ -24,13 +24,15 @@ function getCity(cityName) {
         
         // Create Card Contents
         // City Name, Date, Icon, Weather Conditions, Temperature, Humidity, Wind Speed
-        var name = $("<h1>").text(weatherResponse.name);
+        var name = $("<h1 span>").text(weatherResponse.name).addClass("d-inline-flex");
+        var icon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + weatherResponse.weather[0].icon + ".png");
         var temp = $("<p>").text("Temperature: "+ weatherResponse.main.temp + " °F");
         var humidity = $("<p>").text("Humidity: "+ weatherResponse.main.humidity + " %");
         var wind = $("<p>").text("Wind Speed: "+ weatherResponse.wind.speed+ " MPH");
 
         // Append Card Contents to Card
         currentCard.append(name);
+        currentCard.append(icon);
         currentCard.append(temp);
         currentCard.append(humidity);
         currentCard.append(wind);
