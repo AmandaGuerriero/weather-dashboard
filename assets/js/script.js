@@ -25,12 +25,15 @@ function getCity(cityName) {
         // Create Card Contents
         // City Name, Date, Icon, Weather Conditions, Temperature, Humidity, Wind Speed
         var name = $("<h1>").text(weatherResponse.name);
-        var temp = $("<p>").text("Temperature: "+ weatherResponse.main.temp);
-        console.log(weatherResponse.main.temp);
+        var temp = $("<p>").text("Temperature: "+ weatherResponse.main.temp + " °F");
+        var humidity = $("<p>").text("Humidity: "+ weatherResponse.main.humidity + " %");
+        var wind = $("<p>").text("Wind Speed: "+ weatherResponse.wind.speed+ " MPH");
 
         // Append Card Contents to Card
         currentCard.append(name);
         currentCard.append(temp);
+        currentCard.append(humidity);
+        currentCard.append(wind);
 
         // Gather Lat & Lon
         var lat = weatherResponse.coord.lat;
@@ -55,6 +58,7 @@ var getUV = function(lat, lon){
     })
     .then(function(uvResponse) {
         console.log(uvResponse);
+        // var uviTitle = $("div").text("UV Index: ").addClass("d-inline-flex")
         var uvi = $("<button>").text(uvResponse.value).addClass("btn-sm");
         console.log(uvi);
         if (uvi <= 3) {
@@ -65,6 +69,8 @@ var getUV = function(lat, lon){
             uvi.addClass("btn-danger");
         }
         $("#today").append(uvi);
+        // $("#today").append(uviTitle);
+        // $(uviTitle).append(uvi);
     })
 }
 
@@ -87,13 +93,13 @@ function getForecast(cityName) {
             // Limit the results
             if (forecastResponse.list[i].dt_txt.indexOf("15:00:00") !== -1) {
                 // Create the container for each day
-                var container = $("<div>").addClass("col-md-2");
+                var container = $("<div>").addClass("col-md-2 mt-2");
                 var card = $("<div>").addClass("card text-white bg-primary");
                 var body = $("<div>").addClass("card-body p-2");
                 
                 // Forecast Information
                 var icon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + forecastResponse.list[i].weather.icon + ".png");
-                var tempFore = $("<p>").addClass("card-text").text("Temperature: " + forecastResponse.list[i].main.temp_max + " F");
+                var tempFore = $("<p>").addClass("card-text").text("Temp: " + forecastResponse.list[i].main.temp_max + " °F");
                 var humidity = $("<p>").addClass("card-text").text("Humidity: " + forecastResponse.list[i].main.humidity + " %");
 
                 // Append Forecast to Row
