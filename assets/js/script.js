@@ -20,7 +20,7 @@ function getCity(cityName) {
         $("#today").empty();
         
         // Create Card Container
-        var currentCard = $("<div>").addClass("card");
+        var currentCard = $("<div>").addClass("card-body");
         
         // Create Card Contents
         // City Name, Date, Icon, Weather Conditions, Temperature, Humidity, Wind Speed
@@ -58,7 +58,7 @@ var getUV = function(lat, lon){
     })
     .then(function(uvResponse) {
         console.log(uvResponse);
-        // var uviTitle = $("div").text("UV Index: ").addClass("d-inline-flex")
+        var uviTitle = $("<span>").text("UV Index: ").addClass("d-inline-flex")
         var uvi = $("<button>").text(uvResponse.value).addClass("btn-sm");
         console.log(uvi);
         if (uvi <= 3) {
@@ -68,9 +68,9 @@ var getUV = function(lat, lon){
         } else {
             uvi.addClass("btn-danger");
         }
-        $("#today").append(uvi);
-        // $("#today").append(uviTitle);
-        // $(uviTitle).append(uvi);
+        // $("#today").append(uvi);
+        $(".card-body").append(uviTitle);
+        $(uviTitle).append(uvi);
     })
 }
 
@@ -98,7 +98,7 @@ function getForecast(cityName) {
                 var body = $("<div>").addClass("card-body p-2");
                 
                 // Forecast Information
-                var icon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + forecastResponse.list[i].weather.icon + ".png");
+                var icon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + forecastResponse.list[i].weather[0].icon + ".png");
                 var tempFore = $("<p>").addClass("card-text").text("Temp: " + forecastResponse.list[i].main.temp_max + " °F");
                 var humidity = $("<p>").addClass("card-text").text("Humidity: " + forecastResponse.list[i].main.humidity + " %");
 
@@ -141,35 +141,24 @@ function printCitySearches() {
         console.log(" there is nothing in there")
     } else {
         var citySearch = JSON.parse(window.localStorage.getItem("citySave")) || [];
-    ​
+
         for (var i = 0; i < citySearch.length; i++) {
             var listItem = document.querySelector(".city-list");
-            var storedCity = document.createElement("li");
             
+            // Create each list item
+            var storedCity = document.createElement("li");
+            storedCity.classList = "list-unstyled";
+            
+            // Set city name once seareched
             storedCity.textContent = citySearch[i].name;
-            // storedCity.addEventListener(event);
-    ​
+            storedCity.addEventListener("click", event);
+
+            // Display on page
             listItem.appendChild(storedCity);
         }
     }
 }
 
-
-// // Show all Cities
-// function printCitySearches(cityName) {
-//     // var citySearch = JSON.parse(window.localStorage.getItem("citySave")) || [];
-//     // var cityName = cityNameEl.value.trim();
-//     console.log("I'm inside printCitySearch" + cityName);
-//     // citySearch.forEach(function (citySearch) {
-//         // Create each list item
-//         var liTag = document.createElement("li");
-//         liTag.textContent = cityName;
-//         // liTag.classList = "list-unstyled";
-//         // Display on page
-//         var ulEl = document.querySelector(".city-list");
-//         ulEl.appendChild(liTag);
-//     // });
-// }
 
 // Print Cities
 printCitySearches(cityName);
