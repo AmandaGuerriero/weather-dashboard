@@ -55,8 +55,15 @@ var getUV = function(lat, lon){
     })
     .then(function(uvResponse) {
         console.log(uvResponse);
-        var uvi = $("<p>").text(uvResponse.value);
+        var uvi = $("<button>").text(uvResponse.value).addClass("btn-sm");
         console.log(uvi);
+        if (uvi <= 3) {
+            uvi.addClass("btn-success");
+        } else if (uvi >= 3 && uvi <= 6) {  
+            uvi.addClass("btn-warning");
+        } else {
+            uvi.addClass("btn-danger");
+        }
         $("#today").append(uvi);
     })
 }
@@ -140,3 +147,5 @@ function printCitySearches(cityName) {
 
 // Print Cities
 printCitySearches(cityName);
+
+
