@@ -59,12 +59,28 @@ function getCity(cityName) {
         var name = $("<h1>").text(weatherResponse.name);
         var temp = $("<p>").text("Temperature: "+ weatherResponse.main.temp);
         console.log(weatherResponse.main.temp);
-        
+
         // Append Card Contents to Card
         currentCard.append(name, temp,);
-
+        
         // Append Card to Container
         $("#today").append(currentCard);
+
+        // Gather Lat & Lon
+        var lat = weatherResponse.coord.lat;
+        var lon = weatherResponse.coord.lon;
+  
+        // Return a fetch request to get UV Index with the article title and rating parameters
+        return fetch(
+            `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,daily&appid=${apiKey}`
+        )
+        .then(function(uvResponse) {
+            return uvResponse.json();
+        })
+        .then(function(uvResponse) {
+            console.log(uvResponse);
+        })
+
     })
 }
 
