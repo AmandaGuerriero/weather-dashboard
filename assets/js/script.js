@@ -4,21 +4,6 @@ var cityName = cityNameEl.value.trim();
 var searchBtn = document.getElementById("search-btn");
 var apiKey = "abc282c13673b28882968001a1c14445";
 
-// City Name, Date, Icon, Weather Conditions, Temperature, Humidity, Wind Speed
-
-
- // Display UV Index and color code 
- fetch (
-     `https:api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=hourly,daily&appid=${apiKey}`
- )
-     .then(function(response) {
-         response.json();
-         console.log(response);
- })
-
-
-// Future 5-day weather for the city
-
 
 // Show Current Weather
 function getCity(cityName) {
@@ -38,23 +23,24 @@ function getCity(cityName) {
         var currentCard = $("<div>").addClass("card");
         
         // Create Card Contents
+        // City Name, Date, Icon, Weather Conditions, Temperature, Humidity, Wind Speed
         var name = $("<h1>").text(weatherResponse.name);
         var temp = $("<p>").text("Temperature: "+ weatherResponse.main.temp);
         console.log(weatherResponse.main.temp);
 
         // Append Card Contents to Card
-        // currentCard.append(name, temp, uvi);
         currentCard.append(name);
         currentCard.append(temp);
-        
-        // Append Card to Container
 
         // Gather Lat & Lon
         var lat = weatherResponse.coord.lat;
         var lon = weatherResponse.coord.lon;
-  
+        
+        // Call the other functions
         getUV(lat, lon);
-        // currentCard.append(uvi);
+        getForecast(cityName);
+        
+        // Append Card to Container
         $("#today").append(currentCard);
     })
 }
@@ -73,7 +59,42 @@ var getUV = function(lat, lon){
         console.log(uvi);
         $("#today").append(uvi);
     })
-    // return uvi;
+}
+
+// Show 5 day forecast
+function getForecast(cityName) {
+    fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=imperial`
+    )
+    .then(function(forecastResponse) {
+        return forecastResponse.json();
+      })
+    .then(function(forecastResponse) {
+        console.log(forecastResponse);
+    // Empty Forecast
+    $("#forecast").empty();
+    // Create a row for the forecast
+    $("#forecast").html("<h4 class='mt-3'>5-Day Forecast:</h4>").append("<div class=\"row\">");
+        // Loop through results
+        for (i =0; i < forecastResponse.list.length; i++) {
+            // Limit the results
+            if (forecastResponse.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+                // Create the container for each day
+                var container = $("<div>").addClass("col-md-2");
+                var card = $("<div>").addClass("card text-white bg-primary");
+                var body = $("<div>").addClass("card-body p-2");
+                
+                // Forecast Information
+                var icon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + forecastResponse.list[i].weather.icon + ".png");
+                var tempFore = $("<p>").addClass("card-text").text("Temperature: " + forecastResponse.list[i].main.temp_max + " F");
+                var humidity = $("<p>").addClass("card-text").text("Humidity: " + forecastResponse.list[i].main.humidity + " %");
+
+                // Append Forecast to Row
+                container.append(card.append(body.append(icon, tempFore, humidity)));
+                $("#forecast .row").append(container);
+            }
+        }
+    })
 }
 
 // Submit City
