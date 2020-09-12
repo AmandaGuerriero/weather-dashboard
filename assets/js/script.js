@@ -20,7 +20,7 @@ function getCity(cityName) {
         $("#today").empty();
         
         // Create Card Container
-        var currentCard = $("<div>").addClass("card-body-current");
+        var currentCard = $("<div>").addClass("card-body-current ml-2");
         
         // Create Card Contents
         // City Name, Date, Icon, Weather Conditions, Temperature, Humidity, Wind Speed
@@ -61,11 +61,12 @@ var getUV = function(lat, lon){
     .then(function(uvResponse) {
         console.log(uvResponse);
         var uviTitle = $("<span>").text("UV Index: ").addClass("d-inline-flex")
-        var uvi = $("<button>").text(uvResponse.value).addClass("btn-sm");
-        console.log(uvi);
-        if (uvi <= 3) {
+        var uvi = $("<button>").text(uvResponse.value).addClass("btn-sm ml-1 mb-1");
+        var uvIndexValue = uvResponse.value;
+        console.log(uvIndexValue);
+        if (uvResponse.value <= 3) {
             uvi.addClass("btn-success");
-        } else if (uvi >= 3 && uvi <= 6) {  
+        } else if (uvIndexValue >= 3 && uvIndexValue <= 7) {  
             uvi.addClass("btn-warning");
         } else {
             uvi.addClass("btn-danger");
@@ -89,13 +90,13 @@ function getForecast(cityName) {
     // Empty Forecast
     $("#forecast").empty();
     // Create a row for the forecast
-    $("#forecast").html("<h4 class='mt-3'>5-Day Forecast:</h4>").append("<div class=\"row\">");
+    $("#forecast").html("<h4 class='mt-3 ml-2'>5-Day Forecast:</h4>").append("<div class=\"row\">");
         // Loop through results
         for (i =0; i < forecastResponse.list.length; i++) {
             // Limit the results
             if (forecastResponse.list[i].dt_txt.indexOf("15:00:00") !== -1) {
                 // Create the container for each day
-                var container = $("<div>").addClass("col-md-2 mt-2");
+                var container = $("<div>").addClass("col-md-2 mt-2 ml-2 mb-2");
                 var card = $("<div>").addClass("card text-white bg-primary");
                 var body = $("<div>").addClass("card-body p-2");
                 
