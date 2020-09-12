@@ -20,7 +20,7 @@ function getCity(cityName) {
         $("#today").empty();
         
         // Create Card Container
-        var currentCard = $("<div>").addClass("card-body");
+        var currentCard = $("<div>").addClass("card-body-current");
         
         // Create Card Contents
         // City Name, Date, Icon, Weather Conditions, Temperature, Humidity, Wind Speed
@@ -68,8 +68,8 @@ var getUV = function(lat, lon){
         } else {
             uvi.addClass("btn-danger");
         }
-        // $("#today").append(uvi);
-        $(".card-body").append(uviTitle);
+        // Append UV Index to Current Forecast 
+        $(".card-body-current").append(uviTitle);
         $(uviTitle).append(uvi);
     })
 }
