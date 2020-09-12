@@ -6,30 +6,40 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Weather Dashboard</title>
 </head>
 <body>
+    <header class="container-fluid text-center text-white bg-dark p-2">
+        <h1>Weather Dashbaord</h1>
+    </header>
     <main>
         <!-- Main Content -->
-        <div class="container">
+        <div class="container-fluid">
             <div class = "row">
-                <div class="col-sm-4">
+                <div class="col-lg-3 bg-light">
                     <!-- Search By City -->
-                    <form>
-                        <label for="city">Search for a City:</label><br>
-                        <input type="text" id="city" name="city" placeholder="City, State"><br>
-                        <button id="search-btn" class="btn btn-outline-primary">?</button>
+                    <label for="city" class="mt-1 font-weight-bold">Search for a City: </label><br>
+                    <form class="form-inline form-group">
+                        
+                        <input type="text" id="city" class="form-control" name="city" placeholder="Los Angeles"><br>
+                        <button id="search-btn" class="btn btn-primary">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </form>
                     <!-- Stored City Searches -->
-                    <h1>Saved Searchs</h1>
+                    <div id="search-city" class="wrapper">
+                        <h1>Previous Searches</h1>
+                        <div>
+                            <ul id="city-list"></ol>
+                        </div>
+                    </div>
                 </div>
                     <!-- Results Container 1 -->
-                <div class="col-sm-8">
-                        <h1>Weather placeholder</h1>
-                        <div id="response-container">
-
-                        </div>
+                <div class="col-sm-9">
+                    <div id="today" class="card border-dark mb-3"></div>
+                    <div id="forecast" class="card border-dark mb-3"></div>
                 </div>
                 <!-- Results Container 2 -->
             </div>
