@@ -3,11 +3,6 @@ var cityNameEl = document.getElementById("city");
 var searchBtn = document.getElementById("search-btn");
 var apiKey = "abc282c13673b28882968001a1c14445";
 
-
-// Show current weather
-
-
-
 // City Name, Date, Icon, Weather Conditions, Temperature, Humidity, Wind Speed
 
 // Display UV Index and color code 
@@ -43,10 +38,10 @@ function saveCity(event) {
     getCity(cityName);
 }
 
+// Show Current Weather
 function getCity(cityName) {
     fetch(
-        'https://api.openweathermap.org/data/2.5/weather?q=Lindenhurst&appid=25899f976ac10a6f3a73624013195b56&units=imperial'
-        // `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=imperial`
+        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=imperial`
     )
     .then(function(weatherResponse) {
         return weatherResponse.json();
@@ -62,7 +57,6 @@ function getCity(cityName) {
 
 // Submit City
 searchBtn.onclick = saveCity;
-
 
 
 // Show all Cities
