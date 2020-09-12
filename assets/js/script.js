@@ -49,6 +49,7 @@ function getCity(cityName) {
     .then(function(weatherResponse) {
         console.log(weatherResponse);
 
+        $("#today").empty();
         var temp = $("<p>").text("Temperature: "+ weatherResponse.main.temp);
         console.log(weatherResponse.main.temp);
         $("#today").append(temp);
