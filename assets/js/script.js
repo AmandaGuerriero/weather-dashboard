@@ -4,7 +4,6 @@ var cityName = cityNameEl.value.trim();
 var searchBtn = document.getElementById("search-btn");
 var apiKey = "abc282c13673b28882968001a1c14445";
 
-
 // Show Current Weather
 function getCity(cityName) {
     fetch(
@@ -23,7 +22,6 @@ function getCity(cityName) {
         var currentCard = $("<div>").addClass("card-body-current m-2");
         
         // Create Card Contents
-        // City Name, Date, Icon, Weather Conditions, Temperature, Humidity, Wind Speed
         var name = $("<h2 span>").text(weatherResponse.name).addClass("d-inline-flex");
         var currentDate = moment(weatherResponse.main.dt).format("(MM/DD/YYYY)");
         var icon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + weatherResponse.weather[0].icon + ".png");
@@ -52,7 +50,7 @@ function getCity(cityName) {
     })
 }
 
-// Return a fetch request to get UV Index with the article title and rating parameters
+// Return UV Index with the lat and lon from getCity
 var getUV = function(lat, lon){
     fetch(
         `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${apiKey}`
@@ -62,10 +60,14 @@ var getUV = function(lat, lon){
     })
     .then(function(uvResponse) {
         console.log(uvResponse);
+
+        // Create UV Index Info
         var uviTitle = $("<span>").text("UV Index: ").addClass("d-inline-flex")
         var uvi = $("<button>").text(uvResponse.value).addClass("btn-sm ml-1 mb-1");
         var uvIndexValue = uvResponse.value;
         console.log(uvIndexValue);
+
+        // Color code the UV Index based on value
         if (uvResponse.value <= 3) {
             uvi.addClass("btn-success");
         } else if (uvIndexValue >= 3 && uvIndexValue <= 7) {  
@@ -73,6 +75,7 @@ var getUV = function(lat, lon){
         } else {
             uvi.addClass("btn-danger");
         }
+
         // Append UV Index to Current Forecast 
         $(".card-body-current").append(uviTitle);
         $(uviTitle).append(uvi);
@@ -89,12 +92,16 @@ function getForecast(cityName) {
       })
     .then(function(forecastResponse) {
         console.log(forecastResponse);
+
     // Empty Forecast
     $("#forecast").empty();
+
     // Create a row for the forecast
     $("#forecast").html("<h4 class='mt-3 ml-2'>5-Day Forecast:</h4>").append("<div class=\"row\">");
-        // Loop through results
+        
+    // Loop through results
         for (i =0; i < forecastResponse.list.length; i++) {
+            
             // Limit the results
             if (forecastResponse.list[i].dt_txt.indexOf("15:00:00") !== -1) {
                 // Create the container for each day
@@ -103,7 +110,7 @@ function getForecast(cityName) {
                 var body = $("<div>").addClass("card-body p-2");
                 
                 // Date Information
-                var dateDisplay = $("<h4>").addClass("card-text").text(moment(forecastResponse.list[i].dt_txt).format("MM/DD/YYYY"));
+                var dateDisplay = $("<h5>").addClass("card-text").text(moment(forecastResponse.list[i].dt_txt).format("MM/DD/YYYY"));
 
                 // Forecast Information
                 var icon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + forecastResponse.list[i].weather[0].icon + ".png");
@@ -120,7 +127,6 @@ function getForecast(cityName) {
 
 // Submit City
 searchBtn.onclick = saveCity;
-
 
 // City search is added to history
 function saveCity(event) {    
@@ -169,7 +175,6 @@ function printCitySearches() {
         })
     }
 }
-
 
 // Print Cities
 printCitySearches(cityName);
