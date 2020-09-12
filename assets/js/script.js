@@ -1,15 +1,24 @@
 // Global Variables
 var cityNameEl = document.getElementById("city");
 var searchBtn = document.getElementById("search-btn");
-var apiKey = "abc282c13673b28882968001a1c14445"
+var apiKey = "abc282c13673b28882968001a1c14445";
 
 
 // Show current weather
 
 
+
 // City Name, Date, Icon, Weather Conditions, Temperature, Humidity, Wind Speed
 
 // Display UV Index and color code 
+// fetch (
+//     `https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=hourly,daily&appid=${apiKey}`
+// )
+//     .then(function(response) {
+//         response.json();
+//         console.log(response);
+// })
+
 
 // Future 5-day weather for the city
 
@@ -36,21 +45,19 @@ function saveCity(event) {
 
 function getCity(cityName) {
     fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=imperial`
+        'https://api.openweathermap.org/data/2.5/weather?q=Lindenhurst&appid=25899f976ac10a6f3a73624013195b56&units=imperial'
+        // `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=imperial`
     )
-    .then(function(response) {
-        response.json();
-        console.log(response);
-    })
-    .then(function(data) {
-        console.log(data);
-        var responseContainerEl = document.querySelector("#response-container");
-        var currentWeather = document.createElement("div");
-        currentWeather.setAttribute("p", data.main.temp);
+    .then(function(weatherResponse) {
+        return weatherResponse.json();
+      })
+    .then(function(weatherResponse) {
+        console.log(weatherResponse);
+        var responseContainerEl = document.querySelector("#today");
+        var currentWeather = document.createElement("p");
+        currentWeather.textContent = weatherResponse.main.temp
+        console.log(weatherResponse.main.temp);
         responseContainerEl.appendChild(currentWeather);
-        console.log(currentWeather);
-        // How to make it show on the page?
-        // How to convert the units?
     })
 }
 
