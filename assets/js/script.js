@@ -135,21 +135,41 @@ function saveCity(event) {
     getCity(cityName);
 }
 
-// Show all Cities
-function printCitySearches(cityName) {
-    // var citySearch = JSON.parse(window.localStorage.getItem("citySave")) || [];
-    // var cityName = cityNameEl.value.trim();
-    console.log("I'm inside printCitySearch" + cityName);
-    // citySearch.forEach(function (citySearch) {
-        // Create each list item
-        var liTag = document.createElement("li");
-        liTag.textContent = cityName;
-        // liTag.classList = "list-unstyled";
-        // Display on page
-        var ulEl = document.querySelector(".city-list");
-        ulEl.appendChild(liTag);
-    // });
+function printCitySearches() {
+    
+    if(localStorage.length === 0) {
+        console.log(" there is nothing in there")
+    } else {
+        var citySearch = JSON.parse(window.localStorage.getItem("citySave")) || [];
+    ​
+        for (var i = 0; i < citySearch.length; i++) {
+            var listItem = document.querySelector(".city-list");
+            var storedCity = document.createElement("li");
+            
+            storedCity.textContent = citySearch[i].name;
+            // storedCity.addEventListener(event);
+    ​
+            listItem.appendChild(storedCity);
+        }
+    }
 }
+
+
+// // Show all Cities
+// function printCitySearches(cityName) {
+//     // var citySearch = JSON.parse(window.localStorage.getItem("citySave")) || [];
+//     // var cityName = cityNameEl.value.trim();
+//     console.log("I'm inside printCitySearch" + cityName);
+//     // citySearch.forEach(function (citySearch) {
+//         // Create each list item
+//         var liTag = document.createElement("li");
+//         liTag.textContent = cityName;
+//         // liTag.classList = "list-unstyled";
+//         // Display on page
+//         var ulEl = document.querySelector(".city-list");
+//         ulEl.appendChild(liTag);
+//     // });
+// }
 
 // Print Cities
 printCitySearches(cityName);
