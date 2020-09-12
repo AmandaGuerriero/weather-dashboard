@@ -147,7 +147,7 @@ function printCitySearches() {
             
             // Create each list item
             var storedCity = document.createElement("li");
-            storedCity.classList = "list-unstyled";
+            storedCity.classList = ("list-unstyled list-group-item list-group-item-action");
             
             // Set city name once seareched
             storedCity.textContent = citySearch[i].name;
@@ -156,6 +156,9 @@ function printCitySearches() {
             // Display on page
             listItem.appendChild(storedCity);
         }
+        $(".city-list").on("click", "li", function() {
+            getCity($(this).text());
+        })
     }
 }
 
