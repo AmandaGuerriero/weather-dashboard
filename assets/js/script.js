@@ -53,11 +53,10 @@ function getCity(cityName) {
       })
     .then(function(weatherResponse) {
         console.log(weatherResponse);
-        var responseContainerEl = document.querySelector("#today");
-        var currentWeather = document.createElement("p");
-        currentWeather.textContent = weatherResponse.main.temp
+
+        var temp = $("<p>").text("Temperature: "+ weatherResponse.main.temp);
         console.log(weatherResponse.main.temp);
-        responseContainerEl.appendChild(currentWeather);
+        $("#today").append(temp);
     })
 }
 
