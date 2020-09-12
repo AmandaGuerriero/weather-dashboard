@@ -48,11 +48,23 @@ function getCity(cityName) {
       })
     .then(function(weatherResponse) {
         console.log(weatherResponse);
-
+        
+        // Empty out data
         $("#today").empty();
+        
+        // Create Card Container
+        var currentCard = $("<div>").addClass("card");
+        
+        // Create Card Contents
+        var name = $("<h1>").text(weatherResponse.name);
         var temp = $("<p>").text("Temperature: "+ weatherResponse.main.temp);
         console.log(weatherResponse.main.temp);
-        $("#today").append(temp);
+        
+        // Append Card Contents to Card
+        currentCard.append(name, temp,);
+
+        // Append Card to Container
+        $("#today").append(currentCard);
     })
 }
 
